@@ -1,0 +1,41 @@
+/users/refresh-tokens:
+  post:
+    tags:
+      - User
+    summary: Refresh access and refresh tokens
+    description: |
+      **Returns new access & refresh tokens**
+    security:
+      - bearer: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required: [ refreshToken ]
+            properties:
+              refreshToken:
+                type: string
+                example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjM3YjlhZTgwLWJkYzAtNDFmMC05ZDBmLTQ2ZDZkNjU5M2JkMiIsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsImlhdCI6MTYxNjI0NzI2NSwiZXhwIjoxNjE2MjUyODY1fQ.xlQ8xQ69t1Hjpye_vyqL7hfjPq-LD6MHKXod7pAsyq0"
+    responses:
+      200:
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [accessToken, refreshToken]
+              properties:
+                accessToken:
+                  type: string
+                  description: New JWT access token
+                refreshToken:
+                  type: string
+                  description: New JWT refresh token
+      400:
+        $ref: "#/definitions/400"
+      401:
+        $ref: "#/definitions/401"
+      404:
+        $ref: "#/definitions/404"

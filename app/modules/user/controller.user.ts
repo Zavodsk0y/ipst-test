@@ -4,9 +4,13 @@ import type { IHandlingResponseError } from "../../common/config/http-response.t
 import { sqlCon } from "../../common/config/kysely-config";
 import { HandlingErrorType } from "../../common/enum/error-types";
 import { HttpStatusCode } from "../../common/enum/http-status-code";
+import { JwtTypes } from "../../common/enum/jwt-types";
+import { verifyJwt } from "../shared/utils/jwt-utils";
+import * as refreshTokenRepository from "./repository.token";
 import * as userRepository from "./repository.user";
+import { IRefreshTokenFastifySchema } from "./schemas/refresh-tokens.schema";
 import { ISignUserFastifySchema } from "./schemas/sign.schema";
-import { makeToken } from "./utils/make-token";
+import { makeTokens } from "./utils/make-tokens";
 
 export async function create(req: FastifyRequest<ISignUserFastifySchema>, rep: FastifyReply) {
     const emailExists = await userRepository.getByEmail(sqlCon, req.body.email);
@@ -48,10 +52,35 @@ export async function login(req: FastifyRequest<ISignUserFastifySchema>, rep: Fa
         return rep.code(HttpStatusCode.UNAUTHORIZED).send(info);
     }
 
-    const token = await makeToken(user.id);
+    const session = await refreshTokenRepository.getByUserId(sqlCon, user.id);
+    const tokens = await makeTokens(user.id, user.role, session);
 
     return rep.code(HttpStatusCode.OK).send({
         id: user.id,
-        accessToken: token
+        ...tokens
     });
+}
+
+export async function refreshTokens(req: FastifyRequest<IRefreshTokenFastifySchema>, rep: FastifyReply) {
+    let user;
+    try {
+        user = verifyJwt(req.body.refreshToken, JwtTypes.REFRESH);
+    } catch {
+        const info: IHandlingResponseError = {
+            type: HandlingErrorType.Match,
+            property: "token"
+        };
+        return rep.code(HttpStatusCode.BAD_REQUEST).send(info);
+    }
+
+    const session = await refreshTokenRepository.getByUserIdAndRefreshToken(sqlCon, user.id, req.body.refreshToken);
+
+    if (!session) {
+        const info: IHandlingResponseError = { type: HandlingErrorType.Found, property: "token" };
+        return rep.code(HttpStatusCode.NOT_FOUND).send(info);
+    }
+
+    const tokens = await makeTokens(user.id, user.role, session);
+
+    return rep.code(HttpStatusCode.OK).send(tokens);
 }
