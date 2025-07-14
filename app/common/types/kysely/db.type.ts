@@ -11,14 +11,43 @@ export type Generated<T> = T extends ColumnType<infer S, infer I, infer U>
 
 export type Timestamp = ColumnType<Date, Date | string, Date | string>;
 
+export type UserRole = "admin" | "user";
+
+export interface Albums {
+  created_at: Generated<Timestamp>;
+  id: Generated<string>;
+  user_id: string;
+}
+
+export interface GrantedAccesses {
+  album_id: string;
+  created_at: Generated<Timestamp>;
+  id: Generated<string>;
+  user_id: string;
+}
+
+export interface Images {
+  album_id: string | null;
+  created_at: Generated<Timestamp>;
+  extension: string;
+  file_name: string;
+  id: Generated<string>;
+  mime_type: string;
+  path: string;
+  size_bytes: string;
+}
+
 export interface Users {
   created_at: Generated<Timestamp>;
   email: string;
   id: Generated<string>;
-  name: string;
   password: string;
+  role: Generated<UserRole>;
 }
 
 export interface DB {
+  albums: Albums;
+  granted_accesses: GrantedAccesses;
+  images: Images;
   users: Users;
 }
