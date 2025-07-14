@@ -1,0 +1,32 @@
+/albums/{id}:
+  get:
+    tags:
+      - Album
+    summary: Get one album by id
+    security:
+      - bearer: [ ]
+    parameters:
+      - $ref: "#/definitions/uuid-param"
+    responses:
+      '200':
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uuid
+                  description: Album's id
+                  example: "369603b6-c697-4b49-a14f-e214c78da304"
+                name:
+                  type: string
+                  description: Name of the album
+                  example: "My new album"
+      404:
+        $ref: "#/definitions/404"
+      401:
+        $ref: "#/definitions/401"
+      403:
+        $ref: "#/definitions/403"

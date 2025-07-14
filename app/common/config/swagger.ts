@@ -12,8 +12,7 @@ const swaggerDocument = SwaggerJSDoc({
     definition: {
         openapi: "3.0.0",
         info: {
-            title: "To Do",
-            version: "0.1.0",
+            title: "Image Galley",
             description: "<h3>The REST API documentation of IPST-Test.</h3>" + "<b>Available error types:</b>" + `<ul>${errorTypes}</ul>`
         },
         servers: [{ url: "/" }],

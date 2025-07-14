@@ -6,7 +6,7 @@ export async function up(db: Kysely<any>) {
     await db.schema
         .createTable("images")
         .addColumn("id", "uuid", (col) => col.primaryKey().defaultTo(sql`gen_random_uuid()`))
-        .addColumn("album_id", "uuid", (col) => col.references("albums.id").onDelete("cascade"))
+        .addColumn("album_id", "uuid", (col) => col.references("albums.id").onDelete("set null"))
         .addColumn("file_name", "varchar(255)", (col) => col.unique().notNull())
         .addColumn("path", "varchar(255)", (col) => col.unique().notNull())
         .addColumn("extension", "varchar(255)", (col) => col.notNull())

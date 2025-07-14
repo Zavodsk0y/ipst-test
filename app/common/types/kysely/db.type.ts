@@ -18,6 +18,7 @@ export type UserRoleEnum = "admin" | "user";
 export interface Albums {
   created_at: Generated<Timestamp>;
   id: Generated<string>;
+  name: string;
   user_id: string;
 }
 

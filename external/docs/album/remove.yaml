@@ -1,0 +1,17 @@
+/albums/{id}:
+  delete:
+    tags:
+      - Album
+    summary: Remove a specific notification
+    security: []
+    parameters:
+      - $ref: "#/definitions/uuid-param"
+    responses:
+      204:
+        description: Album's successfully removed, all album's images album_id now is null
+      401:
+        $ref: '#/definitions/401'
+      404:
+        $ref: '#/definitions/404'
+      403:
+        $ref: '#/definitions/403'

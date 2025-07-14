@@ -5,7 +5,7 @@ import type { FastifyRegisterOptions } from "fastify";
 declare module "@fastify/jwt" {
     interface FastifyJWT {
         user: {
-            id?: string;
+            id: string;
             role?: string;
         };
     }

@@ -25,7 +25,6 @@
           application/json:
             schema:
               type: object
-              required: [accessToken, refreshToken]
               properties:
                 accessToken:
                   type: string
