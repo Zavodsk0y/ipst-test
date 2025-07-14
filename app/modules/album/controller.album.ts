@@ -1,6 +1,7 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { sqlCon } from "../../common/config/kysely-config";
 import { HttpStatusCode } from "../../common/enum/http-status-code";
+import * as accessRepository from "../access/repository.access";
 import { IGetByUuidFastifySchema } from "../shared/schemas/get-by-uuid.schema";
 import { getAlbum } from "./helpers/get-album-helper";
 import * as albumRepository from "./repository.album";
@@ -24,15 +25,21 @@ export async function getAll(req: FastifyRequest, rep: FastifyReply) {
 }
 
 export async function getOne(req: FastifyRequest<IGetByUuidFastifySchema>, rep: FastifyReply) {
-    const album = await getAlbum(req.params.id, rep);
+    const album = await getAlbum(req.params.id);
 
     return rep.code(HttpStatusCode.OK).send(album);
 }
 
 export async function remove(req: FastifyRequest<IGetByUuidFastifySchema>, rep: FastifyReply) {
-    const album = await getAlbum(req.params.id, rep);
+    const album = await getAlbum(req.params.id);
 
     await albumRepository.removeById(sqlCon, album.id);
 
     return rep.code(HttpStatusCode.NO_CONTENT).send();
+}
+
+export async function getShared(req: FastifyRequest, rep: FastifyReply) {
+    const albums = await accessRepository.getAccessibleAlbumsByUserId(sqlCon, req.user.id);
+
+    return rep.code(HttpStatusCode.OK).send(albums);
 }

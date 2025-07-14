@@ -1,15 +1,16 @@
 import { IHandlingResponseError } from "../config/http-response";
 import { HandlingErrorType } from "../enum/error-types";
 
-export class AccessDeniedException extends Error {
+export class NotFoundException extends Error {
     details: IHandlingResponseError;
 
     constructor(message?: string) {
         super(message);
 
         this.details = {
-            type: HandlingErrorType.Allowed,
-            message: message ? message : "Access denied"
+            type: HandlingErrorType.Found,
+            property: "id",
+            message: message ? message : "Not found"
         };
     }
 }

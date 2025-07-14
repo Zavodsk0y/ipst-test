@@ -14,9 +14,7 @@ export async function getAllByUserId(con: Kysely<DB> | Transaction<DB>, userId: 
 }
 
 export async function getById(con: Kysely<DB> | Transaction<DB>, id: string) {
-    const selectOptions = ["albums.id", "albums.name"] as const;
-
-    return await con.selectFrom("albums").select(selectOptions).where("id", "=", id).executeTakeFirst();
+    return await con.selectFrom("albums").selectAll().where("id", "=", id).executeTakeFirst();
 }
 
 export async function removeById(con: Kysely<DB> | Transaction<DB>, id: string) {

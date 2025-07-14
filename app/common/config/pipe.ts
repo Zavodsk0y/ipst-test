@@ -3,6 +3,7 @@ import { z, ZodError, ZodObject } from "zod";
 import { HttpStatusCode } from "../enum/http-status-code";
 import { AccessDeniedException } from "../exceptions/access-denied-exception";
 import { CustomException } from "../exceptions/custom-exception";
+import { NotFoundException } from "../exceptions/not-found-exception";
 import { logger } from "./pino-plugin";
 
 export async function AppErrorPipe(err: any, req: FastifyRequest, reply: FastifyReply) {
@@ -14,6 +15,10 @@ export async function AppErrorPipe(err: any, req: FastifyRequest, reply: Fastify
 
     if (err instanceof AccessDeniedException) {
         return reply.code(HttpStatusCode.FORBIDDEN).send(err.details);
+    }
+
+    if (err instanceof NotFoundException) {
+        return reply.code(HttpStatusCode.NOT_FOUND).send(err.details);
     }
 
     if (err instanceof CustomException) {
