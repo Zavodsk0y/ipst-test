@@ -2,7 +2,7 @@
   delete:
     tags:
       - Album
-    summary: Remove a specific notification
+    summary: Remove a specific album (can do owner or admin of album)
     security: []
     parameters:
       - $ref: "#/definitions/uuid-param"

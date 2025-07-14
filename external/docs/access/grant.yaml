@@ -1,0 +1,88 @@
+/accesses:
+  post:
+    tags:
+      - Access
+    summary: Grant access to users (can do owner or admin of album)
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required: [users]
+            properties:
+              users:
+                type: array
+                minItems: 1
+                items:
+                  type: object
+                  required: [id]
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                      example: "d5fe78ca-a8a4-4160-9bbd-ef7b3aa939fe"
+            example:
+              users:
+                - id: "d5fe78ca-a8a4-4160-9bbd-ef7b3aa939fe"
+                - id: "f772ea64-ad06-4c18-bde1-7b769cb4421c"
+    responses:
+      201:
+        description: Album shared successfully
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  example: "You've successfully shared an album"
+                users:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                        example: "f772ea64-ad06-4c18-bde1-7b769cb4421c"
+                      email:
+                        type: string
+                        format: email
+                        example: "admin1@vk.com"
+                album:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                      example: "369603b6-c697-4b49-a14f-e214c78da304"
+                    user_id:
+                      type: string
+                      format: uuid
+                      example: "a8029b00-3f73-4b8d-bfc6-af3c2d87536e"
+                    created_at:
+                      type: string
+                      format: date-time
+                      example: "2025-07-14T10:07:09.225Z"
+                    name:
+                      type: string
+                      example: "NewMy"
+              example:
+                message: "You've successfully shared an album"
+                users:
+                  - id: "f772ea64-ad06-4c18-bde1-7b769cb4421c"
+                    email: "admin1@vk.com"
+                  - id: "d5fe78ca-a8a4-4160-9bbd-ef7b3aa939fe"
+                    email: "admin2@vk.com"
+                album:
+                  id: "369603b6-c697-4b49-a14f-e214c78da304"
+                  user_id: "a8029b00-3f73-4b8d-bfc6-af3c2d87536e"
+                  created_at: "2025-07-14T10:07:09.225Z"
+                  name: "NewMy"
+      401:
+        $ref: '#/definitions/401'
+      404:
+        $ref: '#/definitions/404'
+      403:
+        $ref: '#/definitions/403'

@@ -1,0 +1,32 @@
+/albums/shared:
+  get:
+    tags:
+      - Album
+    summary: Get shared albums with current user
+    security:
+      - bearer: [ ]
+    responses:
+      '200':
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: Album's id
+                    format: uuid
+                    example: "369603b6-c697-4b49-a14f-e214c78da304"
+                  name:
+                    type: string
+                    description: Name of the shared album
+                    example: "My new album"
+      404:
+        $ref: "#/definitions/404"
+      401:
+        $ref: "#/definitions/401"
+      403:
+        $ref: "#/definitions/403"

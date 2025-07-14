@@ -8,5 +8,5 @@ export async function albumGuard(req: FastifyRequest<IGetByUuidFastifySchema>) {
     const album = await getAlbum(req.params.id);
 
     if (req.user.role === ("admin" as UserRoleEnum)) return;
-    if (album.user_id !== req.user.id) throw new AccessDeniedException("You have no access to delete this album");
+    if (album.user_id !== req.user.id) throw new AccessDeniedException("You have no access to this album");
 }

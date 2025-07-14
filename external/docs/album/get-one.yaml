@@ -2,7 +2,7 @@
   get:
     tags:
       - Album
-    summary: Get one album by id
+    summary: Get one album by id (can do owner or admin & accessed users of album)
     security:
       - bearer: [ ]
     parameters:
