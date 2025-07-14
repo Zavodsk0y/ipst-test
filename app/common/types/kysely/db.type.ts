@@ -9,9 +9,11 @@ export type Generated<T> = T extends ColumnType<infer S, infer I, infer U>
   ? ColumnType<S, I | undefined, U>
   : ColumnType<T, T | undefined, T>;
 
+export type MimeTypeEnum = "image/jpeg" | "image/jpg" | "image/png" | "image/svg+xml" | "image/webp";
+
 export type Timestamp = ColumnType<Date, Date | string, Date | string>;
 
-export type UserRole = "admin" | "user";
+export type UserRoleEnum = "admin" | "user";
 
 export interface Albums {
   created_at: Generated<Timestamp>;
@@ -32,9 +34,17 @@ export interface Images {
   extension: string;
   file_name: string;
   id: Generated<string>;
-  mime_type: string;
+  mime_type: MimeTypeEnum;
   path: string;
   size_bytes: string;
+}
+
+export interface RefreshTokens {
+  created_at: Generated<Timestamp>;
+  expires_at: Generated<Timestamp>;
+  id: Generated<string>;
+  refresh_token: string;
+  user_id: string;
 }
 
 export interface Users {
@@ -42,12 +52,13 @@ export interface Users {
   email: string;
   id: Generated<string>;
   password: string;
-  role: Generated<UserRole>;
+  role: Generated<UserRoleEnum>;
 }
 
 export interface DB {
   albums: Albums;
   granted_accesses: GrantedAccesses;
   images: Images;
+  refresh_tokens: RefreshTokens;
   users: Users;
 }

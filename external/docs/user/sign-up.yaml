@@ -13,7 +13,6 @@
             required:
               - email
               - password
-              - name
             properties:
               email:
                 type: string
@@ -23,9 +22,6 @@
                 type: string
                 format: password
                 example: "StrongPassword123*"
-              name:
-                type: string
-                example: "Петр"
     responses:
       "201":
         description: User successfully created
