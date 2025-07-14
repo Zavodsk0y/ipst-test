@@ -5,11 +5,10 @@ import { sqlCon } from "../../common/config/kysely-config";
 import { HandlingErrorType } from "../../common/enum/error-types";
 import { HttpStatusCode } from "../../common/enum/http-status-code";
 import * as userRepository from "./repository.user";
-import type { ILoginUserFastifySchema } from "./schemas/login.schema.ts";
-import { ISignupUserFastifySchema } from "./schemas/sign-up.schema";
+import { ISignUserFastifySchema } from "./schemas/sign.schema";
 import { makeToken } from "./utils/make-token";
 
-export async function create(req: FastifyRequest<ISignupUserFastifySchema>, rep: FastifyReply) {
+export async function create(req: FastifyRequest<ISignUserFastifySchema>, rep: FastifyReply) {
     const emailExists = await userRepository.getByEmail(sqlCon, req.body.email);
 
     if (emailExists) {
@@ -24,7 +23,6 @@ export async function create(req: FastifyRequest<ISignupUserFastifySchema>, rep:
     const hashPassword = await bcrypt.hash(req.body.password, 5);
 
     const user = {
-        name: req.body.name,
         email: req.body.email,
         password: hashPassword
     };
@@ -36,7 +34,7 @@ export async function create(req: FastifyRequest<ISignupUserFastifySchema>, rep:
     });
 }
 
-export async function login(req: FastifyRequest<ILoginUserFastifySchema>, rep: FastifyReply) {
+export async function login(req: FastifyRequest<ISignUserFastifySchema>, rep: FastifyReply) {
     const user = await userRepository.getByEmail(sqlCon, req.body.email);
 
     if (!user) {
