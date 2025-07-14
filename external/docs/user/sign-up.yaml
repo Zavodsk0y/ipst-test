@@ -1,0 +1,45 @@
+/users/sign-up:
+  post:
+    tags:
+      - User
+    summary: Register a new user
+    security: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - email
+              - password
+              - name
+            properties:
+              email:
+                type: string
+                format: email
+                example: "user@example.com"
+              password:
+                type: string
+                format: password
+                example: "StrongPassword123*"
+              name:
+                type: string
+                example: "Петр"
+    responses:
+      "201":
+        description: User successfully created
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uuid
+      409:
+        $ref: "#/definitions/409"
+      422:
+        $ref: "#/definitions/422"
+      400:
+        $ref: "#/definitions/400"
