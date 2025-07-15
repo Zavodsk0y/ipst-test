@@ -1,10 +1,17 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "lib": [
-      "ESNext",
-      "DOM"
-    ],
+    "lib": ["ESNext", "DOM"],
+    "moduleResolution": "node",
+    "baseUrl": "./",
+    "paths": {
+      "@modules/*": ["./app/modules/*"],
+      "@user/*": ["./app/modules/user/*"],
+      "@album/*": ["./app/modules/album/*"],
+      "@access/*": ["./app/modules/access/*"],
+      "@shared/*": ["./app/modules/shared/*"],
+      "@common/*": ["./app/common/*"],
+    },
     "module": "CommonJS",
     "allowJs": true,
     "esModuleInterop": true,

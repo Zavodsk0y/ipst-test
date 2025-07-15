@@ -1,9 +1,9 @@
+import * as albumController from "@album/controller.album";
+import { albumGetGuard } from "@album/guards/album-get-guard";
+import { albumGuard } from "@album/guards/album-guard";
+import { createAlbumFastifySchema } from "@album/schemas/create-album.schema";
+import { getByUuidFastifySchema } from "@shared/schemas/get-by-uuid.schema";
 import type { FastifyInstance } from "fastify";
-import { getByUuidFastifySchema } from "../shared/schemas/get-by-uuid.schema";
-import * as albumController from "./controller.album";
-import { albumGetGuard } from "./guards/album-get-guard";
-import { albumGuard } from "./guards/album-guard";
-import { createAlbumFastifySchema } from "./schemas/create-album.schema";
 
 export const albumRouter = async (app: FastifyInstance) => {
     app.post("/", { schema: createAlbumFastifySchema }, albumController.create);

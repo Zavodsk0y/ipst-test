@@ -1,16 +1,16 @@
+import { globalAuthHook } from "@common/config/global-auth";
+import { jwtOption } from "@common/config/jwt";
+import { KyselyConfig } from "@common/config/kysely-config";
+import { logger } from "@common/config/pino-plugin";
+import { AppErrorPipe, ZodValidatorCompiler } from "@common/config/pipe";
+import { swaggerOption, swaggerUiOption } from "@common/config/swagger";
 import fastifyAuth from "@fastify/auth";
 import { fastifyCors } from "@fastify/cors";
 import { fastifyJwt } from "@fastify/jwt";
 import { fastifySwagger } from "@fastify/swagger";
 import { fastifySwaggerUi } from "@fastify/swagger-ui";
+import { HttpProvider } from "@modules/_index";
 import { fastify, type FastifyInstance } from "fastify";
-import { globalAuthHook } from "./common/config/global-auth";
-import { jwtOption } from "./common/config/jwt";
-import { KyselyConfig } from "./common/config/kysely-config";
-import { logger } from "./common/config/pino-plugin";
-import { AppErrorPipe, ZodValidatorCompiler } from "./common/config/pipe";
-import { swaggerOption, swaggerUiOption } from "./common/config/swagger";
-import { HttpProvider } from "./modules/_index";
 
 async function app() {
     const app: FastifyInstance = fastify();

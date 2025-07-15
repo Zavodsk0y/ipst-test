@@ -1,5 +1,5 @@
+import { DB, GrantedAccesses } from "@common/types/kysely/db.type";
 import { Insertable, Kysely, Transaction } from "kysely";
-import { DB, GrantedAccesses } from "../../common/types/kysely/db.type";
 
 type InsertableAccessRowType = Insertable<GrantedAccesses>;
 

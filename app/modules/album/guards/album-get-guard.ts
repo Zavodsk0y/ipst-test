@@ -1,10 +1,10 @@
+import * as accessRepository from "@access/repository.access";
+import { getAlbum } from "@album/helpers/get-album-helper";
+import { sqlCon } from "@common/config/kysely-config";
+import { AccessDeniedException } from "@common/exceptions/access-denied-exception";
+import { UserRoleEnum } from "@common/types/kysely/db.type";
+import { IGetByUuidFastifySchema } from "@shared/schemas/get-by-uuid.schema";
 import { FastifyRequest } from "fastify";
-import { sqlCon } from "../../../common/config/kysely-config";
-import { AccessDeniedException } from "../../../common/exceptions/access-denied-exception";
-import { UserRoleEnum } from "../../../common/types/kysely/db.type";
-import * as accessRepository from "../../access/repository.access";
-import { IGetByUuidFastifySchema } from "../../shared/schemas/get-by-uuid.schema";
-import { getAlbum } from "../helpers/get-album-helper";
 
 export async function albumGetGuard(req: FastifyRequest<IGetByUuidFastifySchema>) {
     const album = await getAlbum(req.params.id);

@@ -1,5 +1,5 @@
+import { Albums, DB } from "@common/types/kysely/db.type";
 import { type Insertable, type Kysely, Transaction } from "kysely";
-import { Albums, DB } from "../../common/types/kysely/db.type";
 
 type InsertableAlbumRowType = Insertable<Albums>;
 

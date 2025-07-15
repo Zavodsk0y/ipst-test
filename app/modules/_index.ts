@@ -1,7 +1,7 @@
+import { accessRouter } from "@access/router.access";
+import { albumRouter } from "@album/router.album";
+import { userRouter } from "@user/router.user";
 import type { FastifyInstance } from "fastify";
-import { accessRouter } from "./access/router.access";
-import { albumRouter } from "./album/router.album";
-import { userRouter } from "./user/router.user";
 
 interface IProvider {
     instance: (app: FastifyInstance) => Promise<void>;

@@ -1,11 +1,11 @@
+import * as accessRepository from "@access/repository.access";
+import { IGrantAccessFastifySchema } from "@access/schemas/grant-access.schema";
+import { getAlbum } from "@album/helpers/get-album-helper";
+import { sqlCon } from "@common/config/kysely-config";
+import { HttpStatusCode } from "@common/enum/http-status-code";
+import { CustomException } from "@common/exceptions/custom-exception";
+import { IGetByUuidFastifySchema } from "@shared/schemas/get-by-uuid.schema";
 import { FastifyReply, FastifyRequest } from "fastify";
-import { sqlCon } from "../../common/config/kysely-config";
-import { HttpStatusCode } from "../../common/enum/http-status-code";
-import { CustomException } from "../../common/exceptions/custom-exception";
-import { getAlbum } from "../album/helpers/get-album-helper";
-import { IGetByUuidFastifySchema } from "../shared/schemas/get-by-uuid.schema";
-import * as accessRepository from "./repository.access";
-import { IGrantAccessFastifySchema } from "./schemas/grant-access.schema";
 
 export async function create(req: FastifyRequest<IGrantAccessFastifySchema>, rep: FastifyReply) {
     const album = await getAlbum(req.params.id);

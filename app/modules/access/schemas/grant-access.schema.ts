@@ -1,6 +1,6 @@
+import { getByUuidFastifySchema, getByUuidFastifySchemaType } from "@shared/schemas/get-by-uuid.schema";
 import { FastifySchema } from "fastify";
 import { z } from "zod";
-import { getByUuidFastifySchema, getByUuidFastifySchemaType } from "../../shared/schemas/get-by-uuid.schema";
 
 const idSchema = z.object({
     id: z.string()

@@ -1,7 +1,7 @@
+import { JwtTypes } from "@common/enum/jwt-types";
+import { UserRoleEnum } from "@common/types/kysely/db.type";
 import jwt, { SignOptions } from "jsonwebtoken";
 import ms from "ms";
-import { JwtTypes } from "../../../common/enum/jwt-types";
-import { UserRoleEnum } from "../../../common/types/kysely/db.type";
 
 export const generateJwt = (id: string, type: JwtTypes, role: UserRoleEnum) => {
     const secret = type === JwtTypes.REFRESH ? process.env.JWT_REFRESH_SECRET! : process.env.JWT_SECRET!;

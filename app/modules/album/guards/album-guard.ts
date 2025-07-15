@@ -1,8 +1,8 @@
+import { getAlbum } from "@album/helpers/get-album-helper";
+import { AccessDeniedException } from "@common/exceptions/access-denied-exception";
+import { UserRoleEnum } from "@common/types/kysely/db.type";
+import { IGetByUuidFastifySchema } from "@shared/schemas/get-by-uuid.schema";
 import { FastifyRequest } from "fastify";
-import { AccessDeniedException } from "../../../common/exceptions/access-denied-exception";
-import { UserRoleEnum } from "../../../common/types/kysely/db.type";
-import { IGetByUuidFastifySchema } from "../../shared/schemas/get-by-uuid.schema";
-import { getAlbum } from "../helpers/get-album-helper";
 
 export async function albumGuard(req: FastifyRequest<IGetByUuidFastifySchema>) {
     const album = await getAlbum(req.params.id);
