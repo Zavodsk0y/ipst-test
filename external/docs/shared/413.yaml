@@ -1,0 +1,5 @@
+definitions:
+  413:
+    description: request file too large
+    content:
+      $ref: "#/definitions/payload-error"

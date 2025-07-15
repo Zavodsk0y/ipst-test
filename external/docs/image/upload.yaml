@@ -1,0 +1,40 @@
+/images:
+  post:
+    tags:
+      - Image
+    summary: Upload image
+    security:
+      - bearer: []
+    requestBody:
+      required: true
+      content:
+        multipart/form-data:
+          schema:
+            type: object
+            required:
+              - image
+            properties:
+              albumId:
+                type: string
+                format: uuid
+                description: Album's id
+                example: "369603b6-c697-4b49-a14f-e214c78da304"
+              image:
+                type: string
+                format: binary
+                description: Image file (max 5MB, allowed types - jpeg, jpg, png, svg, webp)
+    responses:
+      200:
+        description: Image successfully uploaded
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Image"
+      400:
+        $ref: "#/definitions/400"
+      401:
+        $ref: "#/definitions/401"
+      422:
+        $ref: "#/definitions/422"
+      413:
+        $ref: "#/definitions/413"

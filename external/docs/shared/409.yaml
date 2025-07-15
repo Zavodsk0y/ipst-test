@@ -3,3 +3,7 @@ definitions:
     description: Conflict
     content:
       $ref: "#/definitions/app-error"
+  409-images:
+    description: Conflict
+    content:
+      $ref: "#/definitions/conflict-error-images"

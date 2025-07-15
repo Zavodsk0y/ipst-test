@@ -1,0 +1,54 @@
+/images:
+  get:
+    tags:
+      - Image
+    summary: Get paginated list of user's images with optional album filtering
+    security:
+      - bearer: [ ]
+    parameters:
+      - $ref: "#/definitions/pagination/limit"
+      - $ref: "#/definitions/pagination/offset"
+      - name: albumName
+        in: query
+        description: Filter images by partial album name match (case-insensitive)
+        required: false
+        schema:
+          type: string
+          example: "vacation"
+    responses:
+      200:
+        description: Successful response with images data
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                images:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        $ref: "#/components/schemas/Image/properties/id"
+                      album_id:
+                        $ref: "#/components/schemas/Image/properties/album_id"
+                      file_name:
+                        $ref: "#/components/schemas/Image/properties/file_name"
+                      extension:
+                        $ref: "#/components/schemas/Image/properties/extension"
+                      mime_type:
+                        $ref: "#/components/schemas/Image/properties/mime_type"
+                      path:
+                        $ref: "#/components/schemas/Image/properties/path"
+                      size_bytes:
+                        $ref: "#/components/schemas/Image/properties/size_bytes"
+                total:
+                  type: integer
+                  description: Total count of images matching the filters
+                  example: 6
+      401:
+        $ref: "#/definitions/401"
+      403:
+        $ref: "#/definitions/403"
+      404:
+        $ref: "#/definitions/404"

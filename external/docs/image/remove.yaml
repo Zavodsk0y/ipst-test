@@ -1,15 +1,15 @@
-/albums/{id}:
+/images/{id}:
   delete:
     tags:
-      - Album
-    summary: Remove a specific album (can do owner or admin of album)
+      - Image
+    summary: Remove a specific image (can do owner or admin)
     security:
       - bearer: [ ]
     parameters:
       - $ref: "#/definitions/uuid-param"
     responses:
       204:
-        description: Album's successfully removed, all album's image album_id now is null
+        description: Image's successfully removed, file in fs also has been deleted
       401:
         $ref: "#/definitions/401"
       404:

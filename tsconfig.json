@@ -10,6 +10,7 @@
       "@album/*": ["./app/modules/album/*"],
       "@access/*": ["./app/modules/access/*"],
       "@shared/*": ["./app/modules/shared/*"],
+      "@image/*": ["./app/modules/image/*"],
       "@common/*": ["./app/common/*"],
     },
     "module": "CommonJS",

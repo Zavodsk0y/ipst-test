@@ -1,8 +1,10 @@
-/accesses/{id}:
+/accesses/{albumId}:
   get:
     tags:
       - Access
     summary: Get list of users with access to album (can do owner or admin of album)
+    security:
+      - bearer: [ ]
     parameters:
       - $ref: "#/definitions/uuid-param"
     responses:

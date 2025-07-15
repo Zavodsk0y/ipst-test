@@ -38,6 +38,7 @@ export interface Images {
   mime_type: MimeTypeEnum;
   path: string;
   size_bytes: string;
+  user_id: string;
 }
 
 export interface RefreshTokens {

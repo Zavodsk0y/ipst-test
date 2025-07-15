@@ -17,6 +17,17 @@ export async function getById(con: Kysely<DB> | Transaction<DB>, id: string) {
     return await con.selectFrom("albums").selectAll().where("id", "=", id).executeTakeFirst();
 }
 
+export async function getWithImagesById(con: Kysely<DB>, albumId: string) {
+    const album = await con.selectFrom("albums").select(["id", "name", "created_at"]).where("id", "=", albumId).executeTakeFirst();
+
+    const images = await con.selectFrom("images").select(["id", "file_name", "path", "size_bytes"]).where("album_id", "=", albumId).execute();
+
+    return {
+        ...album,
+        images
+    };
+}
+
 export async function removeById(con: Kysely<DB> | Transaction<DB>, id: string) {
     return await con.deleteFrom("albums").where("id", "=", id).execute();
 }

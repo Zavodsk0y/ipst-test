@@ -18,7 +18,7 @@
                 type: string
                 example: "New Album"
     responses:
-      "201":
+      201:
         description: Album successfully created
         content:
           application/json:
@@ -37,7 +37,6 @@
                   type: string
                   format: date-time
                   example: "2025-07-14T14:30:00Z"
-
       401:
         $ref: "#/definitions/401"
       422:

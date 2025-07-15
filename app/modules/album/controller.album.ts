@@ -1,9 +1,9 @@
 import * as accessRepository from "@access/repository.access";
-import { getAlbum } from "@album/helpers/get-album-helper";
 import * as albumRepository from "@album/repository.album";
 import { ICreateAlbumFastifySchema } from "@album/schemas/create-album.schema";
 import { sqlCon } from "@common/config/kysely-config";
 import { HttpStatusCode } from "@common/enum/http-status-code";
+import { getEntityById } from "@common/helpers/get-entity-by-id";
 import { IGetByUuidFastifySchema } from "@shared/schemas/get-by-uuid.schema";
 import { FastifyReply, FastifyRequest } from "fastify";
 
@@ -25,15 +25,15 @@ export async function getAll(req: FastifyRequest, rep: FastifyReply) {
 }
 
 export async function getOne(req: FastifyRequest<IGetByUuidFastifySchema>, rep: FastifyReply) {
-    const album = await getAlbum(req.params.id);
+    const album = await getEntityById(sqlCon, albumRepository.getWithImagesById, req.params.id);
 
     return rep.code(HttpStatusCode.OK).send(album);
 }
 
 export async function remove(req: FastifyRequest<IGetByUuidFastifySchema>, rep: FastifyReply) {
-    const album = await getAlbum(req.params.id);
+    const album = await getEntityById(sqlCon, albumRepository.getById, req.params.id);
 
-    await albumRepository.removeById(sqlCon, album.id);
+    await albumRepository.removeById(sqlCon, album!.id);
 
     return rep.code(HttpStatusCode.NO_CONTENT).send();
 }
