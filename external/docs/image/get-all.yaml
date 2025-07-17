@@ -3,6 +3,9 @@
     tags:
       - Image
     summary: Get paginated list of user's images with optional album filtering
+    description: |
+      ### Guards:
+      1. **Authentication** - Bearer token check
     security:
       - bearer: [ ]
     parameters:

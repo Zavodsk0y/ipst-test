@@ -3,6 +3,9 @@
     tags:
       - Album
     summary: Get all user's albums
+    description: |
+      ### Guards:
+      1. **Authentication** - Bearer token check
     security:
       - bearer: [ ]
     responses:

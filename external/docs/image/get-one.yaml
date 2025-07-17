@@ -3,6 +3,10 @@
     tags:
       - Image
     summary: Get single image by ID
+    description: |
+      ### Guards:
+      1. **Authentication** - Bearer token check 
+      2. **Image Ownership** - User must be owner of image or have an admin role
     security:
       - bearer: [ ]
     parameters:

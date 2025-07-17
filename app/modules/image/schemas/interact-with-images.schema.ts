@@ -3,12 +3,22 @@ import { getByUuidFastifySchema, getByUuidFastifySchemaType } from "@shared/sche
 import type { FastifySchema } from "fastify";
 import { z } from "zod";
 
-export const attachToAlbumFastifySchema: FastifySchema = {
+export const interactWithImagesFastifySchema: FastifySchema = {
     body: imagesIdsSchema,
     params: getByUuidFastifySchema.params
 };
 
-export interface IAttachToAlbumFastifySchema {
+export interface IInteractWithImagesFastifySchema {
+    Body: z.infer<typeof imagesIdsSchema>;
+    Params: getByUuidFastifySchemaType;
+}
+
+export interface IAttachImagesToAlbumFastifySchema {
+    Body: z.infer<typeof imagesIdsSchema>;
+    Params: getByUuidFastifySchemaType;
+}
+
+export interface IDetachImagesFromAlbumFastifySchema {
     Body: z.infer<typeof imagesIdsSchema>;
     Params: getByUuidFastifySchemaType;
 }

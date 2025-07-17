@@ -3,6 +3,10 @@
     tags:
       - Album
     summary: Get one album by id with attached images (can do owner or admin & accessed users of album)
+    description: |
+      ### Guards:
+      1. **Authentication** - Bearer token check 
+      2. **Album Ownership** - User must be owner of album, have an access or have an admin role
     security:
       - bearer: [ ]
     parameters:

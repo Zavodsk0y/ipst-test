@@ -1,14 +1,14 @@
-/images/attach/{albumId}:
+/images/detach/{albumId}:
   post:
     tags:
       - Image
-    summary: Attach images to album
+    summary: Detach images from album
     description: |
       ### Guards:
       1. **Authentication** - Bearer token check 
-      2. **Album Ownership** - User must be owner of album or have an admin role
+      2. **Album Ownership** - User must be owner of album or have an admin role  
       3. **Images Ownership** - User must be owner of images or have an admin role  
-      4. **Image Attachment** - All images mustn't be attached to album
+      4. **Image Attachment** - All images must be attached to album
     security:
       - bearerAuth: []
     parameters:
@@ -31,7 +31,7 @@
               - imagesIds
     responses:
       200:
-        description: Successfully attached images
+        description: Successfully detached images
         content:
           application/json:
             schema:

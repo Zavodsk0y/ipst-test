@@ -1,12 +1,12 @@
 import * as albumRepository from "@album/repository.album";
 import { sqlCon } from "@common/config/kysely-config";
 import { HttpStatusCode } from "@common/enum/http-status-code";
+import { getEntitiesByIds } from "@common/helpers/get-entities-by-ids";
 import { getEntityById } from "@common/helpers/get-entity-by-id";
 import { MimeTypeEnum } from "@common/types/kysely/db.type";
 import * as imageRepository from "@image/repository.image";
-import { IAttachToAlbumFastifySchema } from "@image/schemas/attach-to-album.schema";
-import { IDeattachFromAlbumFastifySchema } from "@image/schemas/deattach-from-album.schema";
 import { IGetImagesFastifySchema } from "@image/schemas/get-images.schema";
+import { IAttachImagesToAlbumFastifySchema, IDetachImagesFromAlbumFastifySchema } from "@image/schemas/interact-with-images.schema";
 import { IUploadImageFastifySchema } from "@modules/image/schemas/upload-image.schema";
 import { IGetByUuidFastifySchema } from "@shared/schemas/get-by-uuid.schema";
 import { FastifyReply, FastifyRequest } from "fastify";
@@ -76,7 +76,7 @@ export async function remove(req: FastifyRequest<IGetByUuidFastifySchema>, rep: 
     return rep.code(HttpStatusCode.NO_CONTENT).send();
 }
 
-export async function attachToAlbum(req: FastifyRequest<IAttachToAlbumFastifySchema>, rep: FastifyReply) {
+export async function attachToAlbum(req: FastifyRequest<IAttachImagesToAlbumFastifySchema>, rep: FastifyReply) {
     const album = await getEntityById(sqlCon, albumRepository.getById, req.params.id);
 
     const alreadyAttached = await imageRepository.getAlreadyAttachedToAlbum(sqlCon, req.body.imagesIds);
@@ -93,8 +93,10 @@ export async function attachToAlbum(req: FastifyRequest<IAttachToAlbumFastifySch
     return rep.code(HttpStatusCode.OK).send(attachedImages);
 }
 
-export async function deattachFromAlbum(req: FastifyRequest<IDeattachFromAlbumFastifySchema>, rep: FastifyReply) {
-    const notAttached = await imageRepository.getNotAttachedToAlbum(sqlCon, req.body.imagesIds);
+export async function detachFromAlbum(req: FastifyRequest<IDetachImagesFromAlbumFastifySchema>, rep: FastifyReply) {
+    const images = await getEntitiesByIds(sqlCon, imageRepository.getByIds, req.body.imagesIds);
+
+    const notAttached = images.filter((image) => image.album_id === null);
 
     if (notAttached.length > 0) {
         return rep.code(HttpStatusCode.CONFLICT).send({
@@ -103,7 +105,7 @@ export async function deattachFromAlbum(req: FastifyRequest<IDeattachFromAlbumFa
         });
     }
 
-    const deAttachedImages = await imageRepository.deattachFromAlbumByIds(sqlCon, req.body.imagesIds);
+    const detachedImages = await imageRepository.detachFromAlbumByIds(sqlCon, req.body.imagesIds);
 
-    return rep.code(HttpStatusCode.OK).send(deAttachedImages);
+    return rep.code(HttpStatusCode.OK).send(detachedImages);
 }

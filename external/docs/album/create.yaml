@@ -3,6 +3,9 @@
     tags:
       - Album
     summary: Create a new album
+    description: |
+      ### Guards:
+      1. **Authentication** - Bearer token check
     security:
       - bearer: []
     requestBody:

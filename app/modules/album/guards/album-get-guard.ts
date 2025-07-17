@@ -8,9 +8,10 @@ import { IGetByUuidFastifySchema } from "@shared/schemas/get-by-uuid.schema";
 import { FastifyRequest } from "fastify";
 
 export async function albumGetGuard(req: FastifyRequest<IGetByUuidFastifySchema>) {
+    if (req.user.role === ("admin" as UserRoleEnum)) return;
+
     const album = await getEntityById(sqlCon, albumRepository.getById, req.params.id);
 
-    if (req.user.role === ("admin" as UserRoleEnum)) return;
     if (album!.user_id === req.user.id) return;
 
     const hasAccess = await accessRepository.getByUserId(sqlCon, req.user.id);

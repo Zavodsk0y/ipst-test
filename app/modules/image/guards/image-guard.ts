@@ -7,8 +7,9 @@ import { IGetByUuidFastifySchema } from "@shared/schemas/get-by-uuid.schema";
 import { FastifyRequest } from "fastify";
 
 export async function imageGuard(req: FastifyRequest<IGetByUuidFastifySchema>) {
+    if (req.user.role === ("admin" as UserRoleEnum)) return;
+
     const image = await getEntityById(sqlCon, imageRepository.getById, req.params.id);
 
-    if (req.user.role === ("admin" as UserRoleEnum)) return;
     if (image!.user_id !== req.user.id) throw new AccessDeniedException("You have no access to this image");
 }

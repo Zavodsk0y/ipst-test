@@ -29,6 +29,10 @@ export async function getById(con: Kysely<DB>, id: string) {
     return await con.selectFrom("images").selectAll().where("id", "=", id).executeTakeFirst();
 }
 
+export async function getByIds(con: Kysely<DB>, ids: string[]) {
+    return await con.selectFrom("images").selectAll().where("id", "in", ids).execute();
+}
+
 export async function removeById(con: Kysely<DB>, id: string) {
     return await con.deleteFrom("images").where("id", "=", id).execute();
 }
@@ -37,7 +41,7 @@ export async function attachToAlbumByIds(con: Kysely<DB>, ids: string[], albumId
     return await con.updateTable("images").set({ album_id: albumId }).where("id", "in", ids).returningAll().execute();
 }
 
-export async function deattachFromAlbumByIds(con: Kysely<DB>, ids: string[]) {
+export async function detachFromAlbumByIds(con: Kysely<DB>, ids: string[]) {
     return await con.updateTable("images").set({ album_id: null }).where("id", "in", ids).returningAll().execute();
 }
 

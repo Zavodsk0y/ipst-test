@@ -3,6 +3,9 @@
     tags:
       - Album
     summary: Get shared albums with current user
+    description: |
+      ### Guards:
+      1. **Authentication** - Bearer token check
     security:
       - bearer: [ ]
     responses:

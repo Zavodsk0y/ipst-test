@@ -3,6 +3,9 @@
     tags:
       - Image
     summary: Upload image
+    description: |
+      ### Guards:
+      1. **Authentication** - Bearer token check
     security:
       - bearer: []
     requestBody:
