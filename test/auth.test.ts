@@ -58,13 +58,11 @@ test("Positive login user", async () => {
         payload: payload
     });
 
-    const body = response.json();
-    console.log(body);
     const { id, accessToken, refreshToken } = response.json();
 
-    assert.strictEqual(typeof body.id, 'string');
-    assert.strictEqual(typeof body.accessToken, 'string');
-    assert.strictEqual(typeof body.refreshToken, 'string');
+    assert.strictEqual(typeof id, 'string');
+    assert.strictEqual(typeof accessToken, 'string');
+    assert.strictEqual(typeof refreshToken, 'string');
 
     const accessPayload = verifyJwt(accessToken, JwtTypes.ACCESS);
     assert.deepStrictEqual(
