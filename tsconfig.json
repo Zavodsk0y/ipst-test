@@ -5,6 +5,7 @@
     "moduleResolution": "node",
     "baseUrl": "./",
     "paths": {
+      "@app/*": ["./app/*"],
       "@modules/*": ["./app/modules/*"],
       "@user/*": ["./app/modules/user/*"],
       "@album/*": ["./app/modules/album/*"],
