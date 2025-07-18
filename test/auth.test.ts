@@ -47,10 +47,7 @@ test("Positive login user", async () => {
 
     const hashPassword = await bcrypt.hash(payload.password, 5);
 
-    const user = await userRepository.insert(sqlCon, { email: payload.email, password: hashPassword });
-
-    console.log(`Password user: ${user.password}`);
-    console.log(`Faker password: ${payload.password}`);
+    await userRepository.insert(sqlCon, { email: payload.email, password: hashPassword });
 
     const response = await fastify.inject({
         method: "POST",
