@@ -73,7 +73,7 @@ npm run start:local
 
 Документация представлена в двух вариантах:
 
-* `Swagger` - Swagger-документация располагается в external/docs, UI доступен по адресу [http://localhost:5000](http://localhost:5000/docs)
+* `Swagger` - Swagger-документация располагается в external/docs, UI доступен по адресу [http://localhost:5000/docs](http://localhost:5000/docs)
 * `Postman` - Postman-документация предоставлена json-файлом в корне проекта. Прописаны необходимые скрипты, переменные для одновременного запуска всей коллекции (Run)
 
 ## Тестирование
