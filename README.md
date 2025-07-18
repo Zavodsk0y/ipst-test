@@ -26,7 +26,7 @@
 * `JWT_SECRET_DURATION` - длительность JWT-токена
 * `JWT_REFRESH_SECRET` - JWT-секрет для refresh-токенов
 * `JWT_REFRESH_SECRET_DURATION` - длительность refresh JWT-токена
-* `PUBLIC_DIRECTORY` - публичная директория для загрузки файлов
+* `PUBLIC_DIRECTORY` - публичная директория для загрузки файлов. Примечание - для корректной работы настоятельно рекомендуется указать данный параметр как `PUBLIC_DIRECTORY=public/uploads`
 * `TZ` - временная зона
 
 ## Запуск
@@ -85,6 +85,8 @@ npm run start:local
 ```bash 
 cd ./deploy/test
 ```
+
+* Сменить базу данных в .env, указанную в docker-compose (testing)
 
 * Запустить docker compose
 
