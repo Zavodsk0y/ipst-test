@@ -12,10 +12,26 @@ import { fastifySwagger } from "@fastify/swagger";
 import { fastifySwaggerUi } from "@fastify/swagger-ui";
 import { HttpProvider } from "@modules/_index";
 import { fastify, FastifyInstance } from "fastify";
+import * as fs from "node:fs/promises";
 import path from "node:path";
 
 export async function buildApp(): Promise<FastifyInstance> {
     const app: FastifyInstance = fastify();
+
+    const publicDir = path.join(process.cwd(), "public");
+    const uploadsDir = path.join(publicDir, "uploads");
+
+    try {
+        await fs.access(publicDir);
+    } catch {
+        await fs.mkdir(publicDir, { recursive: true });
+    }
+
+    try {
+        await fs.access(uploadsDir);
+    } catch {
+        await fs.mkdir(uploadsDir, { recursive: true });
+    }
 
     app.setValidatorCompiler(ZodValidatorCompiler);
     app.setErrorHandler(AppErrorPipe);
