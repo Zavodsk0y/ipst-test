@@ -1,4 +1,4 @@
-import type { HandlingErrorType } from "../enum/error-types";
+import type { HandlingErrorType } from "@common/enum/error-types";
 
 export interface IHandlingResponseError {
     property?: string;

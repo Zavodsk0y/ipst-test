@@ -1,5 +1,5 @@
 import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
-import { HttpStatusCode } from "../enum/http-status-code";
+import { HttpStatusCode } from "@common/enum/http-status-code";
 
 declare module "fastify" {
     interface FastifyContextConfig {

@@ -1,16 +1,16 @@
+import type { IHandlingResponseError } from "@common/config/http-response";
+import { sqlCon } from "@common/config/kysely-config";
+import { HandlingErrorType } from "@common/enum/error-types";
+import { HttpStatusCode } from "@common/enum/http-status-code";
+import { JwtTypes } from "@common/enum/jwt-types";
+import { verifyJwt } from "@shared/utils/jwt-utils";
+import * as refreshTokenRepository from "@user/repository.token";
+import * as userRepository from "@user/repository.user";
+import { IRefreshTokenFastifySchema } from "@user/schemas/refresh-tokens.schema";
+import { ISignUserFastifySchema } from "@user/schemas/sign.schema";
+import { makeTokens } from "@user/utils/make-tokens";
 import bcrypt from "bcrypt";
 import type { FastifyReply, FastifyRequest } from "fastify";
-import type { IHandlingResponseError } from "../../common/config/http-response.ts";
-import { sqlCon } from "../../common/config/kysely-config";
-import { HandlingErrorType } from "../../common/enum/error-types";
-import { HttpStatusCode } from "../../common/enum/http-status-code";
-import { JwtTypes } from "../../common/enum/jwt-types";
-import { verifyJwt } from "../shared/utils/jwt-utils";
-import * as refreshTokenRepository from "./repository.token";
-import * as userRepository from "./repository.user";
-import { IRefreshTokenFastifySchema } from "./schemas/refresh-tokens.schema";
-import { ISignUserFastifySchema } from "./schemas/sign.schema";
-import { makeTokens } from "./utils/make-tokens";
 
 export async function create(req: FastifyRequest<ISignUserFastifySchema>, rep: FastifyReply) {
     const emailExists = await userRepository.getByEmail(sqlCon, req.body.email);

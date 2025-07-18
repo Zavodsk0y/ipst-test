@@ -1,5 +1,5 @@
+import { DB, RefreshTokens } from "@common/types/kysely/db.type";
 import { type Insertable, type Kysely, sql, Transaction } from "kysely";
-import { DB, RefreshTokens } from "../../common/types/kysely/db.type";
 
 type InsertableRefreshTokenRowType = Insertable<RefreshTokens>;
 
@@ -18,7 +18,7 @@ export async function getByUserIdAndRefreshToken(con: Kysely<DB>, userId: string
 export async function updateRefreshToken(con: Kysely<DB> | Transaction<DB>, id: string, refreshToken: string) {
     return con
         .updateTable("refresh_tokens")
-        .set({ refresh_token: refreshToken, expires_at: sql`now() + INTERVAL '7 days'` })
+        .set({ refresh_token: refreshToken, expires_at: sql`now()+ INTERVAL '7 days'` })
         .where("id", "=", id)
         .execute();
 }

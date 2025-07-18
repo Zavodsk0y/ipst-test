@@ -1,8 +1,8 @@
-import { sqlCon } from "../../../common/config/kysely-config";
-import { JwtTypes } from "../../../common/enum/jwt-types";
-import { UserRoleEnum } from "../../../common/types/kysely/db.type";
-import { RefreshTokenType } from "../../../common/types/kysely/selectable-refresh-token.type";
-import { generateJwt } from "../../shared/utils/jwt-utils";
+import { sqlCon } from "@common/config/kysely-config";
+import { JwtTypes } from "@common/enum/jwt-types";
+import { UserRoleEnum } from "@common/types/kysely/db.type";
+import { RefreshTokenType } from "@common/types/kysely/selectable-refresh-token.type";
+import { generateJwt } from "@shared/utils/jwt-utils";
 import * as refreshTokenRepository from "../repository.token";
 
 export async function makeTokens(userId: string, role: UserRoleEnum, session?: RefreshTokenType) {

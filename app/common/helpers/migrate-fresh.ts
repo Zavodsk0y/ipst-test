@@ -1,8 +1,8 @@
+import type { DB } from "@common/types/kysely/db.type";
 import { FileMigrationProvider, Kysely, Migrator, PostgresDialect } from "kysely";
 import { promises as fs } from "node:fs";
 import * as path from "node:path";
 import { Pool } from "pg";
-import type { DB } from "../types/kysely/db.type";
 
 async function migrateFresh() {
     const db = new Kysely<DB>({

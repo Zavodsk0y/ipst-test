@@ -1,9 +1,9 @@
+import { logger } from "@common/config/pino-plugin";
+import type { DB } from "@common/types/kysely/db.type";
 import type { FastifyInstance, FastifyPluginAsync } from "fastify";
 import fp from "fastify-plugin";
 import { Kysely, ParseJSONResultsPlugin, PostgresDialect, sql } from "kysely";
 import { Pool, types } from "pg";
-import type { DB } from "../types/kysely/db.type";
-import { logger } from "./pino-plugin";
 
 declare module "fastify" {
     interface FastifyInstance {
