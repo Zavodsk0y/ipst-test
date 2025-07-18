@@ -41,8 +41,8 @@
                         $ref: "#/components/schemas/Image/properties/extension"
                       mime_type:
                         $ref: "#/components/schemas/Image/properties/mime_type"
-                      path:
-                        $ref: "#/components/schemas/Image/properties/path"
+                      url:
+                        $ref: "#/components/schemas/Image/properties/url"
                       size_bytes:
                         $ref: "#/components/schemas/Image/properties/size_bytes"
                 total:

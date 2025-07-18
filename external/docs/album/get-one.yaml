@@ -40,22 +40,13 @@
                     type: object
                     properties:
                       id:
-                        type: string
-                        format: uuid
-                        description: Image's id
-                        example: "95308f9d-8726-44b8-9079-13ef193200f3"
+                        $ref: "#/components/schemas/Image/properties/id"
                       file_name:
-                        type: string
-                        description: Filename of the image
-                        example: "dbb82d6594d9df4004b9.jpg"
-                      path:
-                        type: string
-                        description: Relative path to the image file
-                        example: "/public/uploads/dbb82d6594d9df4004b9.jpg"
+                        $ref: "#/components/schemas/Image/properties/file_name"
                       size_bytes:
-                        type: string
-                        description: Size of the image file in bytes
-                        example: "273861"
+                        $ref: "#/components/schemas/Image/properties/size_bytes"
+                      url:
+                        $ref: "#/components/schemas/Image/properties/url"
       401:
         $ref: "#/definitions/401"
       403:
