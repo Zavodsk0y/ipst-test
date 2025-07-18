@@ -16,7 +16,5 @@ export async function albumGetGuard(req: FastifyRequest<IGetByUuidFastifySchema>
 
     const hasAccess = await accessRepository.getByUserId(sqlCon, req.user.id);
 
-    if (!hasAccess) {
-        throw new AccessDeniedException("You have no access to this album");
-    }
+    if (!hasAccess) throw new AccessDeniedException("You have no access to this album");
 }

@@ -12,7 +12,5 @@ export async function imageInteractionGuard(req: FastifyRequest<IInteractWithIma
     const images = await getEntitiesByIds(sqlCon, imageRepository.getByIds, req.body.imagesIds);
 
     const notOwnedImages = images.filter((img) => img.user_id !== req.user.id);
-    if (notOwnedImages.length > 0) {
-        throw new AccessDeniedException("You have no access to these images");
-    }
+    if (notOwnedImages.length > 0) throw new AccessDeniedException("You have no access to these images");
 }

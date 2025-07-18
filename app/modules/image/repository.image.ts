@@ -1,11 +1,15 @@
+import { withUrls } from "@common/helpers/get-with-urls";
 import { DB, Images } from "@common/types/kysely/db.type";
 import { getImagesFastifySchemaType } from "@image/schemas/get-images.schema";
 import { Insertable, Kysely } from "kysely";
+import * as process from "node:process";
 
 type InsertableImageRowType = Insertable<Images>;
 
 export async function insert(con: Kysely<DB>, entity: InsertableImageRowType) {
-    return await con.insertInto("images").returningAll().values(entity).executeTakeFirstOrThrow();
+    const insertedImage = await con.insertInto("images").returningAll().values(entity).executeTakeFirstOrThrow();
+
+    return withUrls(insertedImage, process.env.APP_URL!);
 }
 
 export async function getAllByUserId(con: Kysely<DB>, userId: string, querystring: getImagesFastifySchemaType) {
@@ -22,11 +26,13 @@ export async function getAllByUserId(con: Kysely<DB>, userId: string, querystrin
         .executeTakeFirstOrThrow()
         .then((res) => Number(res.total));
 
-    return { images, total };
+    return { images: images.map((img) => withUrls(img, process.env.APP_URL!)), total };
 }
 
 export async function getById(con: Kysely<DB>, id: string) {
-    return await con.selectFrom("images").selectAll().where("id", "=", id).executeTakeFirst();
+    const image = await con.selectFrom("images").selectAll().where("id", "=", id).executeTakeFirst();
+
+    return image ? withUrls(image, process.env.APP_URL!) : undefined;
 }
 
 export async function getByIds(con: Kysely<DB>, ids: string[]) {
@@ -38,11 +44,15 @@ export async function removeById(con: Kysely<DB>, id: string) {
 }
 
 export async function attachToAlbumByIds(con: Kysely<DB>, ids: string[], albumId: string) {
-    return await con.updateTable("images").set({ album_id: albumId }).where("id", "in", ids).returningAll().execute();
+    const attachedImages = await con.updateTable("images").set({ album_id: albumId }).where("id", "in", ids).returningAll().execute();
+
+    return attachedImages.map((img) => withUrls(img, process.env.APP_URL!));
 }
 
 export async function detachFromAlbumByIds(con: Kysely<DB>, ids: string[]) {
-    return await con.updateTable("images").set({ album_id: null }).where("id", "in", ids).returningAll().execute();
+    const detachedImages = await con.updateTable("images").set({ album_id: null }).where("id", "in", ids).returningAll().execute();
+
+    return detachedImages.map((img) => withUrls(img, process.env.APP_URL!));
 }
 
 export async function getAlreadyAttachedToAlbum(con: Kysely<DB>, ids: string[]) {

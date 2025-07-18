@@ -1,3 +1,4 @@
+import { withUrls } from "@app/common/helpers/get-with-urls";
 import { Albums, DB } from "@common/types/kysely/db.type";
 import { type Insertable, type Kysely, Transaction } from "kysely";
 
@@ -24,7 +25,7 @@ export async function getWithImagesById(con: Kysely<DB>, albumId: string) {
 
     return {
         ...album,
-        images
+        images: images.map((img) => withUrls(img, process.env.APP_URL!))
     };
 }
 
