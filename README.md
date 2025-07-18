@@ -14,11 +14,11 @@
 
 * `APP_HOST` - хост приложения
 * `APP_PORT` - порт приложения
-* `POSTGRES_HOST` - хост базы данных
+* `POSTGRES_HOST` - хост базы данных (db для docker)
 * `POSTGRES_PORT` - порт базы данных
 * `POSTGRES_USER` - суперпользователь базы данных
 * `POSTGRES_PASSWORD` - пароль пользователя базы данных
-* `POSTGRES_DATABASE` - наименование базы данных
+* `POSTGRES_DATABASE` - наименование базы данных (ipst_test в .env)
 * `DATABASE_URL` - адрес базы данных
 * `DB_LOGS` - логи базы данных
 * `LOGGER_LEVEL` - уровень логгера
