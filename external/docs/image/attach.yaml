@@ -1,0 +1,48 @@
+/images/attach/{albumId}:
+  post:
+    tags:
+      - Image
+    summary: Attach images to album
+    description: |
+      ### Guards:
+      1. **Authentication** - Bearer token check 
+      2. **Album Ownership** - User must be owner of album or have an admin role
+      3. **Images Ownership** - User must be owner of images or have an admin role  
+      4. **Image Attachment** - All images mustn't be attached to album
+    security:
+      - bearerAuth: []
+    parameters:
+      - $ref: "#/definitions/uuid-param"
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              imagesIds:
+                type: array
+                items:
+                  type: string
+                  format: uuid
+                minItems: 1
+                example: ["95308f9d-8726-44b8-9079-13ef193200f3", "f8421d3a-1a4a-4820-90bd-cf50c7de2dd7"]
+            required:
+              - imagesIds
+    responses:
+      200:
+        description: Successfully attached images
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/Image"
+      401:
+        $ref: "#/definitions/401"
+      403:
+        $ref: "#/definitions/403"
+      404:
+        $ref: "#/definitions/404"
+      409:
+        $ref: "#/definitions/409-images"

@@ -1,0 +1,22 @@
+/images/{id}:
+  delete:
+    tags:
+      - Image
+    summary: Remove a specific image (can do owner or admin)
+    description: |
+      ### Guards:
+      1. **Authentication** - Bearer token check 
+      2. **Image Ownership** - User must be owner of image or have an admin role
+    security:
+      - bearer: [ ]
+    parameters:
+      - $ref: "#/definitions/uuid-param"
+    responses:
+      204:
+        description: Image's successfully removed, file in fs also has been deleted
+      401:
+        $ref: "#/definitions/401"
+      404:
+        $ref: "#/definitions/404"
+      403:
+        $ref: "#/definitions/403"

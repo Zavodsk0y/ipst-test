@@ -13,3 +13,29 @@ definitions:
             type: string
           message:
             type: string
+  payload-error:
+    application/json:
+      schema:
+        type: object
+        properties:
+          message:
+            type: string
+  conflict-error-images:
+    application/json:
+      schema:
+        type: object
+        properties:
+          error:
+            type: string
+          images:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  $ref: "#/components/schemas/Image/properties/id"
+                album_id:
+                  $ref: "#/components/schemas/Image/properties/album_id"
+                file_name:
+                  $ref: "#/components/schemas/Image/properties/file_name"
+

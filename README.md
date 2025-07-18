@@ -1,35 +1,95 @@
-## Pre-project setup
+# Бэкенд окружение
 
-1. copy file `.env.example` rename to `.env`;
-2. fill in your details
-3. run migrations `npm run sql:migrate`
-4. run project `npm run start:local`
+При запуске окружения разворачиваются следующие сервисы:
 
-## Working with the system
+- [Fastify](https://fastify.dev/) - фреймворк для разработки веб-приложений
+- [PostgreSQL](https://www.postgresql.org/) - объектно-реляционная система управления базами данных
+- [Adminer](https://www.adminer.org/) - инструмент для управления базами данных
 
-### file naming rules
+## Настройка
 
-- Interfaces starts with I: `IUser`
-- Types ends with Type: `UserType`
-- Used `camelCase` for naming
+В `.env.example` прописаны все переменные, которые необходимо заполнить для работы окружения.
 
-### file naming rules
+Общие переменные:
 
-Used `kebab-case` for files and dirs
+* `APP_HOST` - хост приложения
+* `APP_PORT` - порт приложения
+* `POSTGRES_HOST` - хост базы данных
+* `POSTGRES_PORT` - порт базы данных
+* `POSTGRES_USER` - суперпользователь базы данных
+* `POSTGRES_PASSWORD` - пароль пользователя базы данных
+* `POSTGRES_DATABASE` - наименование базы данных
+* `DATABASE_URL` - адрес базы данных
+* `DB_LOGS` - логи базы данных
+* `LOGGER_LEVEL` - уровень логгера
+* `JWT_SECRET` - JWT-секрет
+* `JWT_SECRET_DURATION` - длительность JWT-токена
+* `JWT_REFRESH_SECRET` - JWT-секрет для refresh-токенов
+* `JWT_REFRESH_SECRET_DURATION` - длительность refresh JWT-токена
+* `PUBLIC_DIRECTORY` - публичная директория для загрузки файлов
+* `TZ` - временная зона
 
-### zod schemas naming rules
+## Запуск
 
-- actionEntityFastifySchema (insertUserFastifySchema)
-- ActionEntityType (InsertUserType)
-- IActionEntityFastifySchema (IInsertUserFastifySchema)
-- body/params/querySchema
+Для запуска окружения необходимо:
 
-## scripts
+* Скопировать файл `.env.example` в `.env` и заполнить переменные
+* Выполнить команду `docker compose up --build -d`
 
-```sh
-"build": project build
-"code-check": simulate build but without creating directory. Error checking only
-"start:local": launch during local development
-"sql:migrate": run migrations
-"sql:codegen": generate TS types based on SQL tables
+После запуска окружения в зависимости от установленного порта (`localhost:<APP_PORT>`) приложения будут доступны:
+
+* [http://localhost:5000](http://localhost:5000) - бэкенд
+* [http://localhost/adminer](http://localhost/adminer) - Управление базой данных
+
+## Об окружении для разработки
+
+Для корректной работы после запуска окружения необходимо:
+
+* Перейти в контейнер с приложением: `docker compose exec app sh`
+* Выполнить команду `npm run sql:migrate`
+
+## Скрипты
+
+Для разработки присутствуют следующие скрипты:
+
+* `start:build` - билд проекта
+* `code-check` - симуляция билда проекта (без создания директории)
+* `test` - запуск тестов
+* `start:local` - локальный запуск проекта (hr)
+* `sql:migrate` - запуск миграций
+* `sql:fresh` - фреш-запуск миграций (перезапуск, !сброс всех данных!)
+* `sql:codegen` - генерация типов на основе БД (kysely-codegen)
+* `bun:start:local` - локальный запуск проекта (bun)
+* `bun:sql:codegen` - генерация типов на основе БД (bun)
+* `bun:sql:migrate` - запуск миграций (bun)
+
+Для выполнения скрипта требуется написать npm run, пример:
+
+```bash 
+npm run start:local
 ```
+
+## Документация
+
+Документация представлена в двух вариантах:
+
+* `Swagger` - Swagger-документация располагается в external/docs, UI доступен по адресу [http://localhost:5000/docs](http://localhost:5000/docs)
+* `Postman` - Postman-документация предоставлена json-файлом в корне проекта. Прописаны необходимые скрипты, переменные для одновременного запуска всей коллекции (Run)
+
+## Тестирование
+
+Для выполнения тестов необходимо:
+
+* Перейти в директорию test
+
+```bash 
+cd ./deploy/test
+```
+
+* Запустить docker compose
+
+```bash
+docker compose up --build --abort-on-container-exit --exit-code-from app
+```
+
+После успешной сборки и выполнения контейнеров в терминале выведется код выполнения тестов и весь процесс.

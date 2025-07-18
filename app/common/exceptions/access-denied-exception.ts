@@ -9,7 +9,6 @@ export class AccessDeniedException extends Error {
 
         this.details = {
             type: HandlingErrorType.Allowed,
-            property: "role",
             message: message ? message : "Access denied"
         };
     }

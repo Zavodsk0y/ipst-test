@@ -1,0 +1,46 @@
+components:
+  schemas:
+    Image:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Image's id
+          example: "ac4d0aa4-8c9f-446c-95d2-36631c45d6c2"
+        album_id:
+          type: string
+          format: uuid
+          nullable: true
+          description: ID of associated album (null if not attached)
+          example: null
+        url:
+          type: string
+          description: Url to the image file
+          example: "http://localhost:5000/public/uploads/7a55d2146d16bacbd3ca.jpg"
+        extension:
+          type: string
+          description: Image extension
+          example: ".jpg"
+        mime_type:
+          type: string
+          description: MIME type of the image
+          example: "image/jpeg"
+        size_bytes:
+          type: string
+          description: Size of the image file in bytes
+          example: "92593"
+        created_at:
+          type: string
+          format: date-time
+          description: Image upload timestamp
+          example: "2025-07-15T07:30:17.943Z"
+        user_id:
+          type: string
+          format: uuid
+          description: Owner user ID
+          example: "a8029b00-3f73-4b8d-bfc6-af3c2d87536e"
+        file_name:
+          type: string
+          description: Original filename
+          example: "6b509d3a33dd7da2a3a3.jpg"

@@ -1,0 +1,48 @@
+/albums:
+  post:
+    tags:
+      - Album
+    summary: Create a new album
+    description: |
+      ### Guards:
+      1. **Authentication** - Bearer token check
+    security:
+      - bearer: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - name
+            properties:
+              name:
+                type: string
+                example: "New Album"
+    responses:
+      201:
+        description: Album successfully created
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uuid
+                  example: "f927a62c-3345-4ad8-b6c7-1b797a350bd7"
+                user_id:
+                  type: string
+                  format: uuid
+                  example: "f927a62c-3345-4ad8-b6c7-1b797a350bd7"
+                created_at:
+                  type: string
+                  format: date-time
+                  example: "2025-07-14T14:30:00Z"
+      401:
+        $ref: "#/definitions/401"
+      422:
+        $ref: "#/definitions/422"
+      400:
+        $ref: "#/definitions/400"

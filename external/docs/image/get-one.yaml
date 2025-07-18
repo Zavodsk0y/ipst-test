@@ -1,0 +1,26 @@
+/images/{id}:
+  get:
+    tags:
+      - Image
+    summary: Get single image by ID
+    description: |
+      ### Guards:
+      1. **Authentication** - Bearer token check 
+      2. **Image Ownership** - User must be owner of image or have an admin role
+    security:
+      - bearer: [ ]
+    parameters:
+      - $ref: "#/definitions/uuid-param"
+    responses:
+      200:
+        description: Image data
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Image"
+      401:
+        $ref: "#/definitions/401"
+      403:
+        $ref: "#/definitions/403"
+      404:
+        $ref: "#/definitions/404"

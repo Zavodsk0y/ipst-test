@@ -5,7 +5,7 @@
     summary: Login
     security: [ ]
     description: |
-      **Returns access token**
+      **Returns access & refresh tokens**
     requestBody:
       required: true
       content:
@@ -26,12 +26,14 @@
           application/json:
             schema:
               type: object
-              required: [id, accessToken]
               properties:
                 id:
                   type: string
                   description: User ID
                 accessToken:
+                  type: string
+                  example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjM3YjlhZTgwLWJkYzAtNDFmMC05ZDBmLTQ2ZDZkNjU5M2JkMiIsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsImlhdCI6MTYxNjI0NzI2NSwiZXhwIjoxNjE2MjUyODY1fQ.xlQ8xQ69t1Hjpye_vyqL7hfjPq-LD6MHKXod7pAsyq0"
+                refreshToken:
                   type: string
                   example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjM3YjlhZTgwLWJkYzAtNDFmMC05ZDBmLTQ2ZDZkNjU5M2JkMiIsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsImlhdCI6MTYxNjI0NzI2NSwiZXhwIjoxNjE2MjUyODY1fQ.xlQ8xQ69t1Hjpye_vyqL7hfjPq-LD6MHKXod7pAsyq0"
       401:

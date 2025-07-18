@@ -1,15 +1,18 @@
+import type { IHandlingResponseError } from "@common/config/http-response";
+import { sqlCon } from "@common/config/kysely-config";
+import { HandlingErrorType } from "@common/enum/error-types";
+import { HttpStatusCode } from "@common/enum/http-status-code";
+import { JwtTypes } from "@common/enum/jwt-types";
+import { verifyJwt } from "@shared/utils/jwt-utils";
+import * as refreshTokenRepository from "@user/repository.token";
+import * as userRepository from "@user/repository.user";
+import { IRefreshTokenFastifySchema } from "@user/schemas/refresh-tokens.schema";
+import { ISignUserFastifySchema } from "@user/schemas/sign.schema";
+import { makeTokens } from "@user/utils/make-tokens";
 import bcrypt from "bcrypt";
 import type { FastifyReply, FastifyRequest } from "fastify";
-import type { IHandlingResponseError } from "../../common/config/http-response.ts";
-import { sqlCon } from "../../common/config/kysely-config";
-import { HandlingErrorType } from "../../common/enum/error-types";
-import { HttpStatusCode } from "../../common/enum/http-status-code";
-import * as userRepository from "./repository.user";
-import type { ILoginUserFastifySchema } from "./schemas/login.schema.ts";
-import { ISignupUserFastifySchema } from "./schemas/sign-up.schema";
-import { makeToken } from "./utils/make-token";
 
-export async function create(req: FastifyRequest<ISignupUserFastifySchema>, rep: FastifyReply) {
+export async function create(req: FastifyRequest<ISignUserFastifySchema>, rep: FastifyReply) {
     const emailExists = await userRepository.getByEmail(sqlCon, req.body.email);
 
     if (emailExists) {
@@ -24,7 +27,6 @@ export async function create(req: FastifyRequest<ISignupUserFastifySchema>, rep:
     const hashPassword = await bcrypt.hash(req.body.password, 5);
 
     const user = {
-        name: req.body.name,
         email: req.body.email,
         password: hashPassword
     };
@@ -36,7 +38,7 @@ export async function create(req: FastifyRequest<ISignupUserFastifySchema>, rep:
     });
 }
 
-export async function login(req: FastifyRequest<ILoginUserFastifySchema>, rep: FastifyReply) {
+export async function login(req: FastifyRequest<ISignUserFastifySchema>, rep: FastifyReply) {
     const user = await userRepository.getByEmail(sqlCon, req.body.email);
 
     if (!user) {
@@ -50,10 +52,35 @@ export async function login(req: FastifyRequest<ILoginUserFastifySchema>, rep: F
         return rep.code(HttpStatusCode.UNAUTHORIZED).send(info);
     }
 
-    const token = await makeToken(user.id);
+    const session = await refreshTokenRepository.getByUserId(sqlCon, user.id);
+    const tokens = await makeTokens(user.id, user.role, session);
 
     return rep.code(HttpStatusCode.OK).send({
         id: user.id,
-        accessToken: token
+        ...tokens
     });
+}
+
+export async function refreshTokens(req: FastifyRequest<IRefreshTokenFastifySchema>, rep: FastifyReply) {
+    let user;
+    try {
+        user = verifyJwt(req.body.refreshToken, JwtTypes.REFRESH);
+    } catch {
+        const info: IHandlingResponseError = {
+            type: HandlingErrorType.Match,
+            property: "token"
+        };
+        return rep.code(HttpStatusCode.BAD_REQUEST).send(info);
+    }
+
+    const session = await refreshTokenRepository.getByUserIdAndRefreshToken(sqlCon, user.id, req.body.refreshToken);
+
+    if (!session) {
+        const info: IHandlingResponseError = { type: HandlingErrorType.Found, property: "token" };
+        return rep.code(HttpStatusCode.NOT_FOUND).send(info);
+    }
+
+    const tokens = await makeTokens(user.id, user.role, session);
+
+    return rep.code(HttpStatusCode.OK).send(tokens);
 }

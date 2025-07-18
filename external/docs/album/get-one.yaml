@@ -1,0 +1,55 @@
+/albums/{id}:
+  get:
+    tags:
+      - Album
+    summary: Get one album by id with attached images (can do owner or admin & accessed users of album)
+    description: |
+      ### Guards:
+      1. **Authentication** - Bearer token check 
+      2. **Album Ownership** - User must be owner of album, have an access or have an admin role
+    security:
+      - bearer: [ ]
+    parameters:
+      - $ref: "#/definitions/uuid-param"
+    responses:
+      200:
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uuid
+                  description: Album's id
+                  example: "ef8bf1f5-d6d6-4017-9989-515cb4c9c36f"
+                name:
+                  type: string
+                  description: Name of the album
+                  example: "NewMy"
+                created_at:
+                  type: string
+                  format: date-time
+                  description: Creation timestamp of the album
+                  example: "2025-07-15T09:58:33.955Z"
+                images:
+                  type: array
+                  description: List of images attached to the album
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        $ref: "#/components/schemas/Image/properties/id"
+                      file_name:
+                        $ref: "#/components/schemas/Image/properties/file_name"
+                      size_bytes:
+                        $ref: "#/components/schemas/Image/properties/size_bytes"
+                      url:
+                        $ref: "#/components/schemas/Image/properties/url"
+      401:
+        $ref: "#/definitions/401"
+      403:
+        $ref: "#/definitions/403"
+      404:
+        $ref: "#/definitions/404"

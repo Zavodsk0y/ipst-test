@@ -1,9 +1,10 @@
+import { logger } from "@common/config/pino-plugin";
+import { HttpStatusCode } from "@common/enum/http-status-code";
+import { AccessDeniedException } from "@common/exceptions/access-denied-exception";
+import { CustomException } from "@common/exceptions/custom-exception";
+import { NotFoundException } from "@common/exceptions/not-found-exception";
 import { errorCodes, type FastifyError, type FastifyReply, type FastifyRequest } from "fastify";
 import { z, ZodError, ZodObject } from "zod";
-import { HttpStatusCode } from "../enum/http-status-code";
-import { AccessDeniedException } from "../exceptions/access-denied-exception";
-import { CustomException } from "../exceptions/custom-exception";
-import { logger } from "./pino-plugin";
 
 export async function AppErrorPipe(err: any, req: FastifyRequest, reply: FastifyReply) {
     const parentLogger = logger.child({ req_id: req.id });
@@ -14,6 +15,10 @@ export async function AppErrorPipe(err: any, req: FastifyRequest, reply: Fastify
 
     if (err instanceof AccessDeniedException) {
         return reply.code(HttpStatusCode.FORBIDDEN).send(err.details);
+    }
+
+    if (err instanceof NotFoundException) {
+        return reply.code(HttpStatusCode.NOT_FOUND).send(err.details);
     }
 
     if (err instanceof CustomException) {

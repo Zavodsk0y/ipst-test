@@ -1,0 +1,22 @@
+/albums/{id}:
+  delete:
+    tags:
+      - Album
+    summary: Remove a specific album (can do owner or admin of album)
+    description: |
+      ### Guards:
+      1. **Authentication** - Bearer token check 
+      2. **Album Ownership** - User must be owner of album or have an admin role
+    security:
+      - bearer: [ ]
+    parameters:
+      - $ref: "#/definitions/uuid-param"
+    responses:
+      204:
+        description: Album's successfully removed, all album's image album_id now is null
+      401:
+        $ref: "#/definitions/401"
+      404:
+        $ref: "#/definitions/404"
+      403:
+        $ref: "#/definitions/403"

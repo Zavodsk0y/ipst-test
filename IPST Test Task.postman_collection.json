@@ -1,0 +1,788 @@
+{
+	"info": {
+		"_postman_id": "ce7265a5-3635-4c6e-958f-68f7c0b44c32",
+		"name": "IPST Test Task",
+		"description": "# 🚀 Get started here\n\nThis template guides you through CRUD operations (GET, POST, PUT, DELETE), variables, and tests.\n\n## 🔖 **How to use this template**\n\n#### **Step 1: Send requests**\n\nRESTful APIs allow you to perform CRUD operations using the POST, GET, PUT, and DELETE HTTP methods.\n\nThis collection contains each of these [request](https://learning.postman.com/docs/sending-requests/requests/) types. Open each request and click \"Send\" to see what happens.\n\n#### **Step 2: View responses**\n\nObserve the response tab for status code (200 OK), response time, and size.\n\n#### **Step 3: Send new Body data**\n\nUpdate or add new data in \"Body\" in the POST request. Typically, Body data is also used in PUT request.\n\n```\n{\n    \"name\": \"Add your name in the body\"\n}\n\n ```\n\n#### **Step 4: Update the variable**\n\nVariables enable you to store and reuse values in Postman. We have created a [variable](https://learning.postman.com/docs/sending-requests/variables/) called `base_url` with the sample request [https://postman-api-learner.glitch.me](https://postman-api-learner.glitch.me). Replace it with your API endpoint to customize this collection.\n\n#### **Step 5: Add tests in the \"Scripts\" tab**\n\nAdding tests to your requests can help you confirm that your API is working as expected. You can write test scripts in JavaScript and view the output in the \"Test Results\" tab.\n\n<img src=\"https://content.pstmn.io/fa30ea0a-373d-4545-a668-e7b283cca343/aW1hZ2UucG5n\" alt=\"\" height=\"1530\" width=\"2162\">\n\n## 💪 Pro tips\n\n- Use folders to group related requests and organize the collection.\n    \n- Add more [scripts](https://learning.postman.com/docs/writing-scripts/intro-to-scripts/) to verify if the API works as expected and execute workflows.\n    \n\n## 💡Related templates\n\n[API testing basics](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9a37a28-055b-49cd-8c7e-97494a21eb54&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[API documentation](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9c28f47-1253-44af-a2f3-20dce4da1f18&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[Authorization methods](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=31a9a6ed-4cdf-4ced-984c-d12c9aec1c27&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29905793"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Signup",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin555@vk.com\",\n    \"password\": \"124701mcxx\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/users/signup",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"signup"
+							]
+						},
+						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"",
+									"pm.environment.set(\"access_token\", jsonData.accessToken);",
+									"pm.globals.set(\"access_token\", jsonData.accessToken);",
+									"",
+									"pm.environment.set(\"refresh_token\", jsonData.refreshToken);",
+									"pm.globals.set(\"refresh_token\", jsonData.refreshToken);",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"admin@vk.com\",\n    \"password\": \"124701mcxx\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/users/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"login"
+							]
+						},
+						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh tokens",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"refreshToken\": \"{{refresh_token}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/users/refresh-tokens",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"refresh-tokens"
+							]
+						},
+						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Albums",
+			"item": [
+				{
+					"name": "Create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);\r",
+									"});\r",
+									"\r",
+									"let jsonData = pm.response.json();\r",
+									"\r",
+									"pm.environment.set(\"album_id\", jsonData.id);\r",
+									"pm.globals.set(\"album_id\", jsonData.id);\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"NewMy\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/albums",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"albums"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/albums",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"albums"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Shared",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"new\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/albums/shared",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"albums",
+								"shared"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/albums/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"albums",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{album_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/albums/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"albums",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "ef8bf1f5-d6d6-4017-9989-515cb4c9c36f"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Accesses",
+			"item": [
+				{
+					"name": "Grant",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"users\": [\r\n        {\r\n            \"id\": \"d5fe78ca-a8a4-4160-9bbd-ef7b3aa939fe\"\r\n        },\r\n        {\r\n            \"id\": \"f772ea64-ad06-4c18-bde1-7b769cb4421c\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/accesses/:album_id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"accesses",
+								":album_id"
+							],
+							"variable": [
+								{
+									"key": "album_id",
+									"value": "{{album_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get granted",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/accesses/:albumId",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"accesses",
+								":albumId"
+							],
+							"variable": [
+								{
+									"key": "albumId",
+									"value": "{{album_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Images",
+			"item": [
+				{
+					"name": "Upload",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);\r",
+									"});\r",
+									"\r",
+									"let jsonData = pm.response.json();\r",
+									"\r",
+									"pm.environment.set(\"image_id\", jsonData.id);\r",
+									"pm.globals.set(\"image_id\", jsonData.id);\r",
+									"\r",
+									"pm.environment.set(\"image_name\", jsonData.file_name);\r",
+									"pm.globals.set(\"image_name\", jsonData.file_name);\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "6e6772a235145ab7ef10a1aa6f7037da.jpg"
+								},
+								{
+									"key": "albumId",
+									"value": "{{album_id}}",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/images",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"images"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Attach to album",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"imagesIds\": [\"{{image_id}}\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/images/attach/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"images",
+								"attach",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{album_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Detach from album",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"imagesIds\": [\"{{image_id}}\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/images/detach/:album_id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"images",
+								"detach",
+								":album_id"
+							],
+							"variable": [
+								{
+									"key": "album_id",
+									"value": "{{album_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/images?limit=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"images"
+							],
+							"query": [
+								{
+									"key": "albumName",
+									"value": "NewMy",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "offset",
+									"value": "2",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/images/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"images",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{image_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/images/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"images",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1ab01cfe-7e5d-400a-84b0-b002579446c2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check image",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/public/uploads/:image_name",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"public",
+								"uploads",
+								":image_name"
+							],
+							"query": [
+								{
+									"key": null,
+									"value": "",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "image_name",
+									"value": "{{image_name}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "id",
+			"value": "1"
+		},
+		{
+			"key": "base_url",
+			"value": "https://postman-rest-api-learner.glitch.me/"
+		}
+	]
+}
