@@ -59,7 +59,7 @@ export async function buildApp(): Promise<FastifyInstance> {
     await app.register(fastifyAuth, { defaultRelation: "or" });
     await globalAuthHook(app);
 
-    HttpProvider.forEach((router) => app.register(router.instance, { prefix: router.prefix }));
+    HttpProvider.forEach((router) => app.register(router.instance, { prefix: `api/v1/${router.prefix}` }));
 
     return app;
 }

@@ -15,7 +15,7 @@ const swaggerDocument = SwaggerJSDoc({
             title: "Image Galley",
             description: "<h3>The REST API documentation of Image Gallery for IPST.</h3>" + "<b>Available error types:</b>" + `<ul>${errorTypes}</ul>`
         },
-        servers: [{ url: "/" }],
+        servers: [{ url: "/api/v1" }],
         components: {
             securitySchemes: {
                 bearer: { type: "http", scheme: "bearer", bearerFormat: "JWT" }

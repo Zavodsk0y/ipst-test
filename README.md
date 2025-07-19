@@ -38,7 +38,7 @@
 
 После запуска окружения в зависимости от установленного порта (`localhost:<APP_PORT>`) приложения будут доступны:
 
-* [http://localhost:5000](http://localhost:5000) - бэкенд
+* [http://localhost:5000/api/v1](http://localhost:5000/api/v1) - бэкенд (в зависимости от порта)
 * [http://localhost/adminer](http://localhost/adminer) - Управление базой данных
 
 ## Об окружении для разработки
