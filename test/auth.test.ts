@@ -20,7 +20,7 @@ test("Positive signup new user", async () => {
 
     const response = await fastify.inject({
         method: "POST",
-        url: "/users/signup",
+        url: "api/v1/users/signup",
         payload: payload
     });
 
@@ -51,7 +51,7 @@ test("Positive login user", async () => {
 
     const response = await fastify.inject({
         method: "POST",
-        url: "/users/login",
+        url: "api/v1/users/login",
         payload: payload
     });
 
